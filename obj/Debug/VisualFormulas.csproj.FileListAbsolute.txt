@@ -1,0 +1,10 @@
+C:\Users\Will\Source\Repos\VisualFormulas\VisualFormulas\bin\Debug\VisualFormulas.exe.config
+C:\Users\Will\Source\Repos\VisualFormulas\VisualFormulas\bin\Debug\VisualFormulas.exe
+C:\Users\Will\Source\Repos\VisualFormulas\VisualFormulas\bin\Debug\VisualFormulas.pdb
+C:\Users\Will\Source\Repos\VisualFormulas\VisualFormulas\obj\Debug\VisualFormulas.csprojAssemblyReference.cache
+C:\Users\Will\Source\Repos\VisualFormulas\VisualFormulas\obj\Debug\VisualFormulas.Form1.resources
+C:\Users\Will\Source\Repos\VisualFormulas\VisualFormulas\obj\Debug\VisualFormulas.Properties.Resources.resources
+C:\Users\Will\Source\Repos\VisualFormulas\VisualFormulas\obj\Debug\VisualFormulas.csproj.GenerateResource.cache
+C:\Users\Will\Source\Repos\VisualFormulas\VisualFormulas\obj\Debug\VisualFormulas.csproj.CoreCompileInputs.cache
+C:\Users\Will\Source\Repos\VisualFormulas\VisualFormulas\obj\Debug\VisualFormulas.exe
+C:\Users\Will\Source\Repos\VisualFormulas\VisualFormulas\obj\Debug\VisualFormulas.pdb
