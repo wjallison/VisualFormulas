@@ -8,3 +8,13 @@ C:\Users\Will\Source\Repos\VisualFormulas\VisualFormulas\obj\Debug\VisualFormula
 C:\Users\Will\Source\Repos\VisualFormulas\VisualFormulas\obj\Debug\VisualFormulas.csproj.CoreCompileInputs.cache
 C:\Users\Will\Source\Repos\VisualFormulas\VisualFormulas\obj\Debug\VisualFormulas.exe
 C:\Users\Will\Source\Repos\VisualFormulas\VisualFormulas\obj\Debug\VisualFormulas.pdb
+C:\Users\Public\Documents\Visual Studio Projects\VisualFormulas\bin\Debug\VisualFormulas.exe.config
+C:\Users\Public\Documents\Visual Studio Projects\VisualFormulas\bin\Debug\VisualFormulas.exe
+C:\Users\Public\Documents\Visual Studio Projects\VisualFormulas\bin\Debug\VisualFormulas.pdb
+C:\Users\Public\Documents\Visual Studio Projects\VisualFormulas\obj\Debug\VisualFormulas.csprojAssemblyReference.cache
+C:\Users\Public\Documents\Visual Studio Projects\VisualFormulas\obj\Debug\VisualFormulas.Form1.resources
+C:\Users\Public\Documents\Visual Studio Projects\VisualFormulas\obj\Debug\VisualFormulas.Properties.Resources.resources
+C:\Users\Public\Documents\Visual Studio Projects\VisualFormulas\obj\Debug\VisualFormulas.csproj.GenerateResource.cache
+C:\Users\Public\Documents\Visual Studio Projects\VisualFormulas\obj\Debug\VisualFormulas.csproj.CoreCompileInputs.cache
+C:\Users\Public\Documents\Visual Studio Projects\VisualFormulas\obj\Debug\VisualFormulas.exe
+C:\Users\Public\Documents\Visual Studio Projects\VisualFormulas\obj\Debug\VisualFormulas.pdb

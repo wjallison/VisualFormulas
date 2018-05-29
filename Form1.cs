@@ -46,6 +46,7 @@ namespace VisualFormulas
             //test.Location = e.Location;
 
             group test = new group();
+            test.grouper.Location = e.Location;
             this.tabPage1.Controls.Add(test.grouper);
         }
 
@@ -54,17 +55,56 @@ namespace VisualFormulas
 
     public class group
     {
-        public GroupBox grouper = new GroupBox();
+        public GroupBox grouper;
         public TextBox titleBox, formulaBox, evaluateBox;
         public Label l1, l2;
         public PictureBox inputs;
         public PictureBox output;
 
+        public void init()
+        {
+            grouper = new GroupBox();
+            titleBox = new TextBox();
+            formulaBox = new TextBox();
+            evaluateBox = new TextBox();
+            l1 = new Label();
+            l2 = new Label();
+            inputs = new PictureBox();
+            output = new PictureBox();
+
+            grouper.Size = new Size(210, 210);
+
+            grouper.Controls.Add(titleBox);
+            titleBox.Location = new Point(50, 18);
+
+            grouper.Controls.Add(l1);
+            l1.Location = new Point(50, 50);
+            l1.Text = "Formula:";
+
+            grouper.Controls.Add(formulaBox);
+            formulaBox.Location = new Point(50, 80);
+
+            grouper.Controls.Add(l2);
+            l2.Location = new Point(50, 120);
+            l2.Text = "Evaluates to:";
+
+            grouper.Controls.Add(evaluateBox);
+            evaluateBox.Location = new Point(50, 150);
+
+            grouper.Controls.Add(inputs);
+            inputs.Location = new Point(16, 66);
+
+            grouper.Controls.Add(output);
+            output.Location = new Point(157, 159);
+        }
+
         public group()
         {
-            grouper.Controls.Add(titleBox);
-            grouper.Controls.Add(formulaBox);
-            grouper.Controls.Add(evaluateBox);
+            init();
+
+
+
+            
         }
     }
 }
