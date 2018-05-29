@@ -13,6 +13,7 @@ namespace VisualFormulas
     public partial class Form1 : Form
     {
         public bool addnew = false;
+        public List<group> formList = new List<group>();
 
         public Form1()
         {
@@ -48,6 +49,8 @@ namespace VisualFormulas
             group test = new group();
             test.grouper.Location = e.Location;
             this.tabPage1.Controls.Add(test.grouper);
+
+            formList.Add(test);
         }
 
         
@@ -55,14 +58,22 @@ namespace VisualFormulas
 
     public class group
     {
+        //Planned: button to close groupbox
+
         public GroupBox grouper;
         public TextBox titleBox, formulaBox, evaluateBox;
         public Label l1, l2;
         public PictureBox inputs;
         public PictureBox output;
 
+        public string formula;
+        public float eval;
+
+        public IDictionary<string, group> refs = new Dictionary<string, group>();
+
         public void init()
         {
+            //initialize all
             grouper = new GroupBox();
             titleBox = new TextBox();
             formulaBox = new TextBox();
@@ -74,6 +85,8 @@ namespace VisualFormulas
 
             grouper.Size = new Size(210, 210);
 
+
+            //Add controls and place them
             grouper.Controls.Add(titleBox);
             titleBox.Location = new Point(50, 18);
 
@@ -101,9 +114,21 @@ namespace VisualFormulas
         public group()
         {
             init();
+            //formulaBox.TextChanged += new System.EventHandler(this.formulaBox_TextChanged);
+            formulaBox.Leave += new System.EventHandler(this.formulaBox_Leave);
 
 
-
+            
+        }
+        private void formulaBox_TextChanged(object sender, EventArgs e) //Don't use.  Activates on every char typed
+        {
+            MessageBox.Show("test");
+        }
+        private void formulaBox_Leave(object sender, EventArgs e)
+        {
+            MessageBox.Show("test");
+            formula = formulaBox.Text;
+            List<string> sep = formula.Split(new char[]{ '[', ']'}).ToList();
             
         }
     }
