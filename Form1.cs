@@ -157,7 +157,11 @@ namespace VisualFormulas
         {
             if (Form1.selectedActive)
             {
-
+                System.Drawing.Graphics g = Graphics.FromImage(inputs.Image);
+                MessageBox.Show((refs.Count() % 2 * 12).ToString() + ", " + (refs.Count() / 2 * 12).ToString());
+                g.DrawRectangle(new Pen(Form1.selected.colorOut), 
+                    new Rectangle(refs.Count()%2*12, refs.Count()/2*12, 12, 12));
+                
             }
             else if (formulaBox.ContainsFocus)
             {
@@ -171,7 +175,17 @@ namespace VisualFormulas
             {
                 if (initInputs)
                 {
-                    inputs.Image = Form1.selected.output.Image;
+                    //inputs.Image = Form1.selected.output.Image;
+                    //inputs.BackColor = Form1.selected.output.BackColor;
+                    //inputs.Image = new Image();
+                    Bitmap bmp = new Bitmap(24, 60);
+                    using(Graphics gr = Graphics.FromImage(bmp)) { gr.Clear(Color.FromKnownColor(KnownColor.Window)); }
+                    inputs.Image = bmp;
+                    System.Drawing.Graphics g = Graphics.FromImage(inputs.Image);
+                    g.DrawRectangle(new Pen(Form1.selected.colorOut), new Rectangle(0, 0, 12, 12));
+
+                    refs.Add("1", Form1.selected);
+                    initInputs = false;
                 }
             }
         }
