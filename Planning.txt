@@ -1,0 +1,15 @@
+﻿
+
+Connect one group to another
+
+XXXXX  Assign color swabs
+
+Connect color swabs
+
+Formula interpretation
+
+Track evaluation chain (to prevent loops)
+
+Saving
+
+Shrink box

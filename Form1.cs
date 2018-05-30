@@ -14,6 +14,8 @@ namespace VisualFormulas
     {
         public bool addnew = false;
         public List<group> formList = new List<group>();
+        public static group selected;
+        public static bool selectedActive = false;
 
         public Form1()
         {
@@ -71,6 +73,10 @@ namespace VisualFormulas
 
         public IDictionary<string, group> refs = new Dictionary<string, group>();
 
+        public Color colorOut;
+
+        public bool initInputs = true;
+
         public void init()
         {
             //initialize all
@@ -106,9 +112,15 @@ namespace VisualFormulas
 
             grouper.Controls.Add(inputs);
             inputs.Location = new Point(16, 66);
+            inputs.Size = new Size(24, 60);
 
             grouper.Controls.Add(output);
             output.Location = new Point(157, 159);
+            output.Size = new Size(12, 12);
+
+            Random rnd = new Random();
+            colorOut = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
+            output.BackColor = colorOut;
         }
 
         public group()
@@ -116,9 +128,13 @@ namespace VisualFormulas
             init();
             //formulaBox.TextChanged += new System.EventHandler(this.formulaBox_TextChanged);
             formulaBox.Leave += new System.EventHandler(this.formulaBox_Leave);
+            output.Click += new System.EventHandler(this.output_Click);
+            //inputs.MouseClick += new System.EventHandler(this.inputs_MouseClick);
+            inputs.MouseClick += new System.Windows.Forms.MouseEventHandler(this.inputs_MouseClick);
+            grouper.Click += new EventHandler(this.grouper_Click);
 
 
-            
+
         }
         private void formulaBox_TextChanged(object sender, EventArgs e) //Don't use.  Activates on every char typed
         {
@@ -129,7 +145,35 @@ namespace VisualFormulas
             MessageBox.Show("test");
             formula = formulaBox.Text;
             List<string> sep = formula.Split(new char[]{ '[', ']'}).ToList();
-            
+        }
+
+        private void output_Click(object sender, EventArgs e)
+        {
+            Form1.selected = this;
+            Form1.selectedActive = true;
+        }
+
+        private void inputs_MouseClick(object sender, EventArgs e)
+        {
+            if (Form1.selectedActive)
+            {
+
+            }
+            else if (formulaBox.ContainsFocus)
+            {
+                MessageBox.Show("test");
+            }
+        }
+
+        private void grouper_Click(object sender, EventArgs e)
+        {
+            if (Form1.selectedActive)
+            {
+                if (initInputs)
+                {
+                    inputs.Image = Form1.selected.output.Image;
+                }
+            }
         }
     }
 }
