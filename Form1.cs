@@ -109,6 +109,7 @@ namespace VisualFormulas
 
             grouper.Controls.Add(evaluateBox);
             evaluateBox.Location = new Point(50, 150);
+            evaluateBox.Text = "0";
 
             grouper.Controls.Add(inputs);
             inputs.Location = new Point(16, 66);
@@ -153,20 +154,29 @@ namespace VisualFormulas
             Form1.selectedActive = true;
         }
 
-        private void inputs_MouseClick(object sender, EventArgs e)
+        private void inputs_MouseClick(object sender, MouseEventArgs e)
         {
+            //e.
             if (Form1.selectedActive)
             {
-                System.Drawing.Graphics g = Graphics.FromImage(inputs.Image);
-                MessageBox.Show((refs.Count() % 2 * 12).ToString() + ", " + (refs.Count() / 2 * 12).ToString());
-                g.DrawRectangle(new Pen(Form1.selected.colorOut), 
-                    new Rectangle(refs.Count()%2*12, refs.Count()/2*12, 12, 12));
+                //System.Drawing.Graphics g = Graphics.FromImage(inputs.Image);
+                ////MessageBox.Show((refs.Count() % 2 * 12).ToString() + ", " + (refs.Count() / 2 * 12).ToString());
+                //g.FillRectangle(new SolidBrush(Form1.selected.colorOut), 
+                //    new Rectangle(refs.Count()%2*12, refs.Count()/2*12, 12, 12));
                 
             }
-            else if (formulaBox.ContainsFocus)
+            //else if (formulaBox.ContainsFocus)
+            else if(formulaBox.Focused)
             {
-                MessageBox.Show("test");
+                //MessageBox.Show("test");
+                int i = e.X / 12 + 2 * (e.Y / 12);
+                //MessageBox.Show(i.ToString());
+                formulaBox.Text += "[" + (i + 1).ToString() + "]";
             }
+        }
+        private void inputs_MouseDown(object sender, EventArgs e)
+        {
+            
         }
 
         private void grouper_Click(object sender, EventArgs e)
@@ -182,10 +192,30 @@ namespace VisualFormulas
                     using(Graphics gr = Graphics.FromImage(bmp)) { gr.Clear(Color.FromKnownColor(KnownColor.Window)); }
                     inputs.Image = bmp;
                     System.Drawing.Graphics g = Graphics.FromImage(inputs.Image);
-                    g.DrawRectangle(new Pen(Form1.selected.colorOut), new Rectangle(0, 0, 12, 12));
+                    g.FillRectangle(new SolidBrush(Form1.selected.colorOut), new Rectangle(0, 0, 12, 12));
 
                     refs.Add("1", Form1.selected);
                     initInputs = false;
+                    Form1.selectedActive = false;
+                }
+                else
+                {
+                    Bitmap bmp = new Bitmap(24, 60);
+                    using (Graphics gr = Graphics.FromImage(bmp)) { gr.Clear(Color.FromKnownColor(KnownColor.Window)); }
+                    inputs.Image = bmp;
+
+                    System.Drawing.Graphics g = Graphics.FromImage(inputs.Image);
+                    //g.FillRectangle(new SolidBrush(Form1.selected.colorOut), 
+                    //    new Rectangle(refs.Count() % 2 * 12, refs.Count() / 2 * 12, 12, 12));
+
+                    for (int i = 0; i < refs.Count(); i++)
+                    {
+                        g.FillRectangle(new SolidBrush(refs[(i+1).ToString()].colorOut),
+                            new Rectangle(i % 2 * 12, i / 2 * 12, 12, 12));
+                    }
+
+                    refs.Add((refs.Count()+1).ToString(), Form1.selected);
+                    Form1.selectedActive = false;
                 }
             }
         }
