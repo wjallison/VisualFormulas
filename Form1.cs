@@ -47,6 +47,7 @@ namespace VisualFormulas
             //this.tabPage1.Controls.Add(test);
 
             //test.Location = e.Location;
+            if (!addnew) { return; }
 
             group test = new group();
             test.grouper.Location = e.Location;
@@ -119,6 +120,8 @@ namespace VisualFormulas
             output.Location = new Point(157, 159);
             output.Size = new Size(12, 12);
 
+
+            //Select random color to represent evaluated value
             Random rnd = new Random();
             colorOut = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
             output.BackColor = colorOut;
@@ -172,6 +175,8 @@ namespace VisualFormulas
                 int i = e.X / 12 + 2 * (e.Y / 12);
                 //MessageBox.Show(i.ToString());
                 formulaBox.Text += "[" + (i + 1).ToString() + "]";
+                formulaBox.SelectionStart = formulaBox.Text.Length;
+                formulaBox.SelectionLength = 0;
             }
         }
         private void inputs_MouseDown(object sender, EventArgs e)

@@ -1,6 +1,6 @@
 ﻿
 
-Connect one group to another
+XXXXX  Connect one group to another
 
 XXXXX  Assign color swabs
 
@@ -13,3 +13,5 @@ Track evaluation chain (to prevent loops)
 Saving
 
 Shrink box
+
+Click and drag
