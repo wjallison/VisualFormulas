@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+//using org.mariuszgromada.math.mxparser;
 
 namespace VisualFormulas
 {
@@ -20,6 +21,9 @@ namespace VisualFormulas
         public Form1()
         {
             InitializeComponent();
+
+            
+            //Expression e = new Expression("1");
         }
 
         private void tabControl1_Click(object sender, EventArgs e)
@@ -70,7 +74,7 @@ namespace VisualFormulas
         public PictureBox output;
 
         public string formula;
-        public float eval;
+        public double eval;
 
         public IDictionary<string, group> refs = new Dictionary<string, group>();
 
@@ -138,7 +142,7 @@ namespace VisualFormulas
             grouper.Click += new EventHandler(this.grouper_Click);
 
 
-
+            MessageBox.Show(subEval("1+(1)+(1+(1))"));
         }
         private void formulaBox_TextChanged(object sender, EventArgs e) //Don't use.  Activates on every char typed
         {
@@ -146,9 +150,13 @@ namespace VisualFormulas
         }
         private void formulaBox_Leave(object sender, EventArgs e)
         {
-            MessageBox.Show("test");
+            //MessageBox.Show("test");
             formula = formulaBox.Text;
             List<string> sep = formula.Split(new char[]{ '[', ']'}).ToList();
+
+            //MessageBox.Show(Convert.ToDouble(formula).ToString());
+
+            //Evaluate();
         }
 
         private void output_Click(object sender, EventArgs e)
@@ -198,6 +206,8 @@ namespace VisualFormulas
                     inputs.Image = bmp;
                     System.Drawing.Graphics g = Graphics.FromImage(inputs.Image);
                     g.FillRectangle(new SolidBrush(Form1.selected.colorOut), new Rectangle(0, 0, 12, 12));
+                    //inputs.Image = bmp;
+
 
                     refs.Add("1", Form1.selected);
                     initInputs = false;
@@ -223,6 +233,56 @@ namespace VisualFormulas
                     Form1.selectedActive = false;
                 }
             }
+        }
+
+        public void Evaluate()
+        {
+            //Insert values in place of [i]
+
+
+            //Actually evaluate the expression
+            //Expression e = new Expression(formula);
+            //eval = e.calculate();
+
+            //evaluateBox.Text = eval.ToString();
+
+
+        }
+        public string subEval(string f)
+        {
+            //Remove whitespace
+            string s = f;
+            System.Text.RegularExpressions.Regex.Replace(s, @"\s+", "");
+
+            if (s.Contains('('))
+            {
+                if (s.IndexOf('(') == 0)
+                {
+                    s = subEval(
+                        subEval(s.Substring(1, s.IndexOf(')') - 1)) +
+                        s.Substring(s.IndexOf(')') + 1));
+                }
+                else
+                {
+                    MessageBox.Show(s);
+                    MessageBox.Show("1: " + s.Substring(0, s.IndexOf('(')));
+                    MessageBox.Show("2: " + s.Substring(s.IndexOf('(') + 1, s.IndexOf(')') - (s.IndexOf('(') + 1)));
+                    //MessageBox.Show()
+
+
+                    s = subEval(
+                        s.Substring(0, s.IndexOf('(')) +
+                        subEval(s.Substring(s.IndexOf('(') + 1, s.IndexOf(')') - (s.IndexOf('(')+1))) +
+                        s.Substring(s.IndexOf(')') + 1)
+                        );
+                }
+                //string s = f.Substring(0,f.IndexOf('(') + subEval(f.Substring())
+            }
+
+
+
+
+            return s;
         }
     }
 }
