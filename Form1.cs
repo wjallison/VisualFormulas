@@ -152,9 +152,6 @@ namespace VisualFormulas
         {
             //MessageBox.Show("test");
             formula = formulaBox.Text;
-            //List<string> sep = formula.Split(new char[]{ '[', ']'}).ToList();
-
-            //MessageBox.Show(Convert.ToDouble(formula).ToString());
 
             Evaluate();
 
@@ -240,52 +237,54 @@ namespace VisualFormulas
         public void Evaluate()
         {
             //Insert values in place of [i]
-
+            while (formula.Contains("["))
+            {
+                formula = formula.Insert(formula.IndexOf('[') + 3, refs[formula[formula.IndexOf('[') + 1].ToString()].eval.ToString());
+                formula = formula.Remove(formula.IndexOf('['), 3);
+            }
+            
 
             //Actually evaluate the expression
-            //Expression e = new Expression(formula);
-            //eval = e.calculate();
-
-            //evaluateBox.Text = eval.ToString();
+            
 
             evaluateBox.Text = parenReduce(formula);
         }
-        public string subEval(string f)
-        {
-            //Remove whitespace
-            string s = f;
-            System.Text.RegularExpressions.Regex.Replace(s, @"\s+", "");
+        //public string subEval(string f)
+        //{
+        //    //Remove whitespace
+        //    string s = f;
+        //    System.Text.RegularExpressions.Regex.Replace(s, @"\s+", "");
 
-            if (s.Contains('('))
-            {
-                if (s.IndexOf('(') == 0)
-                {
-                    s = subEval(
-                        subEval(s.Substring(1, s.IndexOf(')') - 1)) +
-                        s.Substring(s.IndexOf(')') + 1));
-                }
-                else
-                {
-                    MessageBox.Show(s);
-                    MessageBox.Show("1: " + s.Substring(0, s.IndexOf('(')));
-                    MessageBox.Show("2: " + s.Substring(s.IndexOf('(') + 1, s.IndexOf(')') - (s.IndexOf('(') + 1)));
-                    //MessageBox.Show()
-
-
-                    s = subEval(
-                        s.Substring(0, s.IndexOf('(')) +
-                        subEval(s.Substring(s.IndexOf('(') + 1, s.IndexOf(')') - (s.IndexOf('(')+1))) +
-                        s.Substring(s.IndexOf(')') + 1)
-                        );
-                }
-                //string s = f.Substring(0,f.IndexOf('(') + subEval(f.Substring())
-            }
+        //    if (s.Contains('('))
+        //    {
+        //        if (s.IndexOf('(') == 0)
+        //        {
+        //            s = subEval(
+        //                subEval(s.Substring(1, s.IndexOf(')') - 1)) +
+        //                s.Substring(s.IndexOf(')') + 1));
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show(s);
+        //            MessageBox.Show("1: " + s.Substring(0, s.IndexOf('(')));
+        //            MessageBox.Show("2: " + s.Substring(s.IndexOf('(') + 1, s.IndexOf(')') - (s.IndexOf('(') + 1)));
+        //            //MessageBox.Show()
 
 
+        //            s = subEval(
+        //                s.Substring(0, s.IndexOf('(')) +
+        //                subEval(s.Substring(s.IndexOf('(') + 1, s.IndexOf(')') - (s.IndexOf('(')+1))) +
+        //                s.Substring(s.IndexOf(')') + 1)
+        //                );
+        //        }
+        //        //string s = f.Substring(0,f.IndexOf('(') + subEval(f.Substring())
+        //    }
 
 
-            return s;
-        }
+
+
+        //    return s;
+        //}
 
         public string parenReduce(string f)
         {
