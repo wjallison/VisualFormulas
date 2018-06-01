@@ -142,7 +142,7 @@ namespace VisualFormulas
             grouper.Click += new EventHandler(this.grouper_Click);
 
 
-            MessageBox.Show(subEval("1+(1)+(1+(1))"));
+            //MessageBox.Show(subEval("1+(1)+(1+(1))"));
         }
         private void formulaBox_TextChanged(object sender, EventArgs e) //Don't use.  Activates on every char typed
         {
@@ -152,9 +152,11 @@ namespace VisualFormulas
         {
             //MessageBox.Show("test");
             formula = formulaBox.Text;
-            List<string> sep = formula.Split(new char[]{ '[', ']'}).ToList();
+            //List<string> sep = formula.Split(new char[]{ '[', ']'}).ToList();
 
             //MessageBox.Show(Convert.ToDouble(formula).ToString());
+
+            Evaluate();
 
             //Evaluate();
         }
@@ -246,7 +248,7 @@ namespace VisualFormulas
 
             //evaluateBox.Text = eval.ToString();
 
-
+            evaluateBox.Text = parenReduce(formula);
         }
         public string subEval(string f)
         {
@@ -282,6 +284,159 @@ namespace VisualFormulas
 
 
 
+            return s;
+        }
+
+        public string parenReduce(string f)
+        {
+            string s = f, sPrime = "";
+            int counter, counterMax=10;
+            List<int> ls = new List<int>();
+            //foreach (char c in s) { ls.Add(' '); }
+
+            while(counterMax > 0)
+            {
+                ls.Clear();
+                counter = 0;
+                counterMax = 0;
+                sPrime = "";
+                int insertIndex = -1;
+
+                for (int i = 0; i < s.Length; i++)
+                {
+                    if(s[i]=='('/* || s[i] == ')'*/)
+                    {
+                        counter++;
+                        counterMax++;
+                        //ls.Add(-1);
+                        ls.Add(counter);
+                    }
+                    else if(s[i] == ')')
+                    {
+                        ls.Add(counter);
+                        counter--;
+                        //ls.Add(-1);
+                        //ls.Add(counter);
+                    }
+                    else { ls.Add(counter); }
+                }
+
+                for(int i = 0; i < s.Length; i++)
+                {
+                    if (ls[i] == counterMax)
+                    {
+                        if(s[i]!= '(' && s[i]!= ')')
+                        {
+                            sPrime += s[i];
+                        }
+                        s = s.Remove(i, 1);
+                        s = s.Insert(i, " ");
+                        if(insertIndex == -1) { insertIndex = i; }
+                    }
+                }
+                sPrime = arithEval(sPrime);
+                s = s.Insert(insertIndex, sPrime);
+                s = RemoveSpaces(s);
+            }
+
+            s = RemoveSpaces(s);
+            return s;
+        }
+
+        public string arithEval(string f)
+        {
+            string s = f;
+            List<int> ls = new List<int>();
+            List<string> quantsS = new List<string>();
+            List<double> quantsD = new List<double>();
+            List<double> q3 = new List<double>();
+            List<double> q4 = new List<double>();
+            int qCount = 0;
+
+            quantsS.Add("");
+            for (int i = 0; i < f.Length; i++)
+            {
+                if (Char.IsNumber(f[i]) || f[i] == '.') { ls.Add(0); quantsS[qCount] += f[i]; }
+                else if (f[i] == '+') { ls.Add(1); quantsS.Add(""); qCount++; }
+                else if (f[i] == '-') { ls.Add(2); quantsS.Add(""); qCount++; }
+                else if (f[i] == '*') { ls.Add(3); quantsS.Add(""); qCount++; }
+                else if (f[i] == '/') { ls.Add(4); quantsS.Add(""); qCount++; }
+            }
+
+            if(quantsS.Count() == 1) { return quantsS[0]; }
+
+            foreach (string qS in quantsS) { quantsD.Add(Double.Parse(qS)); }
+
+            double q1 = quantsD[0], q2 = quantsD[1];
+            qCount = 1;
+            for (int i = 0; i < f.Length; i++)
+            {
+                if (f[i] == '*')
+                {
+                    //q3.Add(q1 * q2);
+                    q1 = q1 * q2;
+                    //q1 = q3.Last();
+                    qCount++;
+                    if (qCount == quantsD.Count()) { q3.Add(q1); break; }
+                    q2 = quantsD[qCount];
+                }
+                else if (f[i] == '/')
+                {
+                    //q3.Add(q1 / q2);
+                    q1 = q1 / q2;
+                    //q1 = q3.Last();
+                    qCount++;
+                    if (qCount == quantsD.Count()) { q3.Add(q1); break; }
+                    q2 = quantsD[qCount];
+                }
+                else if(f[i] == '+' || f[i] == '-')
+                {
+                    q3.Add(q1);
+                    q1 = quantsD[qCount];
+                    qCount++;
+                    if(qCount == quantsD.Count()) { q3.Add(q2); break; }
+                    q2 = quantsD[qCount];
+                }
+            }
+
+            if (q3.Count() == 1) { return q3[0].ToString(); }
+
+            q1 = q3[0]; q2 = q3[1];
+            qCount = 1;
+            for(int i = 0; i < f.Length; i++)
+            {
+                if(f[i]== '+')
+                {
+                    //q4.Add(q1 + q2);
+                    //q1 = q4.Last();
+                    q1 = q1 + q2;
+                    qCount++;
+                    if(qCount == q3.Count()) { break; }
+                    q2 = q3[qCount];
+                }
+                else if (f[i] == '-')
+                {
+                    //q4.Add(q1 - q2);
+                    //q1 = q4.Last();
+                    q1 = q1 - q2;
+                    qCount++;
+                    if (qCount == q3.Count()) { break; }
+                    q2 = q3[qCount];
+                }
+            }
+
+
+
+            return q1.ToString();
+        }
+
+        public string RemoveSpaces(string f)
+        {
+            string s = "";
+            for (int i = 0; i < f.Length; i++)
+            {
+                if(f[i]!=' ') { s += f[i]; }
+            }
             return s;
         }
     }
